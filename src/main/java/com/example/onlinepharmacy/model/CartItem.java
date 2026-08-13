@@ -1,6 +1,7 @@
 package com.example.onlinepharmacy.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 @Table(name = "cart_items", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"cart_id", "medicine_id"})
 })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CartItem {
 
     @Id
