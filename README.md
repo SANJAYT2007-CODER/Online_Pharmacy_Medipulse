@@ -153,8 +153,13 @@ erDiagram
 - **Maven** (or use the included wrapper `mvnw.cmd`)
 - A **Supabase Account** with a PostgreSQL instance
 
-### 2. Configure Database & Keys
-Open [src/main/resources/application.properties](file:///c:/Users/sanja/OneDrive/Desktop/online%20pharmacy/src/main/resources/application.properties) and make sure your details are configured:
+### 2. Project Structure
+The project is split into two separate directories:
+- **`frontend/`**: Contains HTML views, CSS stylesheets, JavaScript files (including Supabase Realtime logic), and SVG media assets.
+- **`backend/`**: Contains Spring Boot Java source code, REST controllers, JPA models/services, database scripts, and Maven configuration.
+
+### 3. Configure Database & Keys
+Open [backend/src/main/resources/application.properties](file:///c:/Users/sanja/OneDrive/Documents/online%20pharmacy/backend/src/main/resources/application.properties) and make sure your details are configured:
 
 ```properties
 # Database Connection (Supabase PostgreSQL)
@@ -167,12 +172,12 @@ supabase.url=https://<project-ref>.supabase.co
 supabase.anon-key=<your-anon-public-api-key>
 ```
 
-### 3. Run Database Setup in Supabase
-Run the SQL schema script inside the **Supabase SQL Editor** to create the tables and enable realtime updates:
+### 4. Run Database Setup in Supabase
+Run the SQL schema script (`backend/Database_schema.sql`) inside the **Supabase SQL Editor** to create the tables and enable realtime updates:
 
 ```sql
 -- 1. Create tables
--- [Copy the contents of Database_schema.sql or combined schema script here]
+-- [Copy the contents of backend/Database_schema.sql]
 
 -- 2. Enable Realtime Publications
 ALTER PUBLICATION supabase_realtime ADD TABLE medicines;
@@ -180,9 +185,10 @@ ALTER PUBLICATION supabase_realtime ADD TABLE prescriptions;
 ALTER PUBLICATION supabase_realtime ADD TABLE orders;
 ```
 
-### 4. Start the Application
-Run the Maven wrapper task to start the local Tomcat server:
+### 5. Start the Application
+Navigate to the `backend/` directory and run the Maven wrapper to start the backend server:
 ```powershell
+cd backend
 .\mvnw.cmd spring-boot:run
 ```
 

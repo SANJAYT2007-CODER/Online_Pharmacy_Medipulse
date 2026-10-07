@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <rect width="400" height="300" fill="#f7fee7" rx="16"/>
+  <rect x="92" y="42" width="216" height="216" rx="16" fill="#000000" opacity="0.06"/>
+  <rect x="90" y="40" width="220" height="220" rx="16" fill="#ffffff" stroke="#84cc16" stroke-width="3"/>
+  <path d="M 90,56 Q 90,40 106,40 L 294,40 Q 310,40 310,56 L 310,95 L 90,95 Z" fill="#65a30d"/>
+  <text x="200" y="70" font-family="'Inter', system-ui, sans-serif" font-size="16" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="1">REGLAN 10mg</text>
+  <text x="200" y="87" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="600" fill="#d9f99d" text-anchor="middle">Metoclopramide HCl Prokinetic</text>
+
+  <rect x="105" y="105" width="36" height="20" rx="4" fill="#ecfccb"/>
+  <text x="123" y="119" font-family="sans-serif" font-size="11" font-weight="800" fill="#3f6212" text-anchor="middle">OTC</text>
+
+  <!-- Stomach Motility Icon & Tablets Illustration -->
+  <path d="M 200,120 Q 215,120 220,135 Q 225,150 210,165 Q 195,180 180,160 Q 170,145 185,130 Z" fill="none" stroke="#65a30d" stroke-width="2.5"/>
+  <g fill="#a3e635" stroke="#4d7c0f" stroke-width="1.5">
+    <circle cx="160" cy="180" r="14"/>
+    <circle cx="240" cy="180" r="14"/>
+  </g>
+  <text x="200" y="208" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="600" fill="#3f6212" text-anchor="middle">10mg Scored Green Tablets</text>
+
+  <line x1="110" y1="230" x2="290" y2="230" stroke="#ecfccb" stroke-width="1"/>
+  <text x="200" y="248" font-family="'Inter', system-ui, sans-serif" font-size="12" font-weight="700" fill="#3f6212" text-anchor="middle">Baxter Healthcare</text>
+</svg>

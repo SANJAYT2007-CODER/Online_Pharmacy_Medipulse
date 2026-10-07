@@ -1,0 +1,1084 @@
+/* MediPulse Online Pharmacy - Modern Design System */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap');
+
+:root {
+  --primary: #059669;
+  --primary-hover: #047857;
+  --primary-light: #d1fae5;
+  --secondary: #0ea5e9;
+  --accent: #6366f1;
+  --bg-main: #f8fafc;
+  --card-bg: #ffffff;
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --success: #10b981;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.08);
+  --shadow-lg: 0 10px 30px -5px rgba(0,0,0,0.12);
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  line-height: 1.5;
+}
+
+/* Header & Navbar */
+.navbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.85rem 2rem;
+}
+
+.nav-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.brand-icon {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.search-bar-container {
+  flex: 1;
+  max-width: 450px;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.65rem 1rem 0.65rem 2.6rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: 50px;
+  font-size: 0.95rem;
+  background: #f1f5f9;
+  transition: var(--transition);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.12);
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Role Switcher Pills */
+.role-switcher {
+  display: flex;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 50px;
+  border: 1px solid var(--border-color);
+}
+
+.role-btn {
+  padding: 0.4rem 0.85rem;
+  border-radius: 50px;
+  border: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.role-btn.active {
+  background: var(--card-bg);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-secondary {
+  background: #f1f5f9;
+  color: var(--text-dark);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background: #e2e8f0;
+}
+
+.btn-outline {
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background: var(--primary-light);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+/* Cart Trigger Button */
+.cart-btn {
+  position: relative;
+  background: var(--primary-light);
+  color: var(--primary);
+  border-radius: 50px;
+  padding: 0.6rem 1.1rem;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--danger);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Sub-header Categories Navigation */
+.category-nav {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.75rem 2rem;
+  overflow-x: auto;
+}
+
+.category-list {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.cat-pill {
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  background: #f1f5f9;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+
+.cat-pill:hover, .cat-pill.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* Main Content Area */
+.main-wrapper {
+  max-width: 1300px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* Hero Section */
+.hero-banner {
+  background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+  color: white;
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-text h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.hero-text p {
+  opacity: 0.9;
+  font-size: 1.05rem;
+  max-width: 550px;
+  margin-bottom: 1.5rem;
+}
+
+/* Medicine Catalog Grid */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.medicine-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Medicine Card */
+.medicine-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition);
+  position: relative;
+}
+
+.medicine-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: #cbd5e1;
+}
+
+.card-image-wrap {
+  height: 180px;
+  background: #f8fafc;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.medicine-card:hover .card-image-wrap img {
+  transform: scale(1.05);
+}
+
+.rx-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.otc-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #10b981;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+}
+
+.discount-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #f59e0b;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.card-body {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.medicine-brand {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.medicine-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+
+.medicine-desc {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-footer-row {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--border-color);
+}
+
+.price-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.current-price {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.original-price {
+  font-size: 0.8rem;
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+/* Modals & Drawers */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: white;
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 650px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(20px);
+  transition: transform 0.25s ease;
+}
+
+.modal-overlay.active .modal-content {
+  transform: translateY(0);
+}
+
+.modal-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--text-dark);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Order Pipeline & Status Pills */
+.status-pill {
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.status-PLACED { background: #e0f2fe; color: #0284c7; }
+.status-APPROVED { background: #dcfce7; color: #15803d; }
+.status-PROCESSING { background: #fef3c7; color: #b45309; }
+.status-SHIPPED { background: #e0e7ff; color: #4338ca; }
+.status-DELIVERED { background: #d1fae5; color: #047857; }
+.status-CANCELLED { background: #fee2e2; color: #b91c1c; }
+
+/* Admin & Pharmacist Tables */
+.table-responsive {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: white;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.custom-table th {
+  background: #f8fafc;
+  padding: 0.85rem 1rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.custom-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.custom-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* KPI Cards for Admin */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.kpi-card {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.kpi-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--primary-light);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.kpi-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.kpi-label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================
+   TASK 1: 6 HEALTHCARE SECTIONS GRID & DEDICATED PAGE STYLES
+   ========================================================== */
+
+.sections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0 2.5rem 0;
+}
+
+.section-card {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.section-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
+.section-card-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.icon-medicine { background: #d1fae5; color: #059669; }
+.icon-doctor { background: #e0f2fe; color: #0284c7; }
+.icon-lab { background: #fae8ff; color: #9333ea; }
+.icon-products { background: #fef3c7; color: #d97706; }
+.icon-checkup { background: #ffe4e6; color: #e11d48; }
+.icon-blog { background: #ccfbf1; color: #0d9488; }
+
+.section-card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.4rem;
+}
+
+.section-card-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-bottom: 1.25rem;
+  flex: 1;
+}
+
+.section-card-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: var(--transition);
+}
+
+/* Page Banner & Header */
+.page-header-banner {
+  background: linear-gradient(135deg, #059669 0%, #0284c7 100%);
+  color: white;
+  border-radius: var(--radius-lg);
+  padding: 2rem 2.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header-banner h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.4rem;
+}
+
+.page-header-banner p {
+  opacity: 0.9;
+  font-size: 1rem;
+  max-width: 600px;
+}
+
+.btn-back-home {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--transition);
+}
+
+.btn-back-home:hover {
+  background: white;
+  color: var(--text-dark);
+}
+
+/* Filter & Controls Bar */
+.filter-bar {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Doctor & Service Cards */
+.doctor-card, .lab-card, .package-card, .blog-card {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.doctor-card:hover, .lab-card:hover, .package-card:hover, .blog-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+  border-color: var(--primary);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.75rem 1rem;
+  }
+  .nav-container {
+    flex-wrap: wrap;
+  }
+  .search-bar-container {
+    order: 3;
+    max-width: 100%;
+    margin-top: 0.5rem;
+  }
+  .page-header-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+  .sections-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================
+   NEW HOME PAGE LAYOUT COMPONENTS (REFERENCE IMAGE STYLES)
+   ========================================================== */
+
+/* Top Healthcare Category Nav Bar (Reference Image 1) */
+.top-cat-bar {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding: 0.5rem 0.25rem 1.25rem 0.25rem;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 2rem;
+}
+
+.top-cat-bar::-webkit-scrollbar {
+  height: 6px;
+}
+
+.top-cat-bar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.top-cat-card {
+  flex: 0 0 115px;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1rem 0.6rem;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+
+.top-cat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+}
+
+.top-cat-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  object-fit: contain;
+}
+
+.top-cat-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.2;
+}
+
+.top-cat-subtitle {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #059669;
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+}
+
+/* Shop by Healthcare Category Grid (Reference Image 2 & 3) */
+.shop-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+.shop-cat-card {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.2rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.shop-cat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--secondary);
+}
+
+.shop-cat-card img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  margin-bottom: 0.75rem;
+  transition: transform 0.3s ease;
+}
+
+.shop-cat-card:hover img {
+  transform: scale(1.1);
+}
+
+.shop-cat-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.3;
+}
+
+.shop-cat-discount {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #0284c7;
+  background: #e0f2fe;
+  padding: 0.15rem 0.5rem;
+  border-radius: 50px;
+  margin-top: 0.4rem;
+  display: inline-block;
+}
+
+/* Horizontal Product Carousels */
+.horizontal-scroll-container {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding: 0.5rem 0.25rem 1.25rem 0.25rem;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.carousel-card {
+  flex: 0 0 240px;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: var(--transition);
+  position: relative;
+}
+
+.carousel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+}
+
+.carousel-card-img {
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+  margin-bottom: 0.75rem;
+}
+
+/* Offers Section Banner */
+.offers-banner-container {
+  background: linear-gradient(135deg, #7e22ce 0%, #3b82f6 100%);
+  color: white;
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  box-shadow: var(--shadow-lg);
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+/* Footer */
+footer.platform-footer {
+  background: #0f172a !important;
+  color: #94a3b8 !important;
+  padding: 3.5rem 2rem 2rem 2rem !important;
+  margin-top: 4rem !important;
+  border-top: 1px solid #1e293b !important;
+  width: 100% !important;
+  display: block !important;
+}
+
+footer.platform-footer .footer-container {
+  max-width: 1300px !important;
+  margin: 0 auto !important;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+  gap: 2.5rem !important;
+  margin-bottom: 2.5rem !important;
+}
+
+footer.platform-footer .footer-title {
+  color: #ffffff !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 1.25rem !important;
+  letter-spacing: 0.5px !important;
+}
+
+footer.platform-footer .footer-links {
+  list-style: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.65rem !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+footer.platform-footer .footer-links li {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+footer.platform-footer .footer-links a {
+  color: #94a3b8 !important;
+  text-decoration: none !important;
+  font-size: 0.9rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  transition: all 0.25s ease !important;
+}
+
+footer.platform-footer .footer-links a:hover {
+  color: #10b981 !important;
+  transform: translateX(4px) !important;
+}
+
+footer.platform-footer .footer-bottom {
+  max-width: 1300px !important;
+  margin: 0 auto !important;
+  padding-top: 1.75rem !important;
+  border-top: 1px solid #1e293b !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 1rem !important;
+  font-size: 0.85rem !important;
+  color: #64748b !important;
+}
+

@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPulse - Online Healthcare & Pharmacy Platform</title>
+    <link rel="stylesheet" href="/css/styles.css?v=2">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="/" onclick="navigateTo('/', event)" class="brand">
+                <div class="brand-icon"><i class="fa-solid fa-prescription-bottle-medical"></i></div>
+                <span>Medi<span style="color: var(--primary);">Pulse</span></span>
+            </a>
+
+            <div class="search-bar-container">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search medicines, doctors, lab tests, products..." onkeyup="handleGlobalSearch(event)">
+            </div>
+
+            <div class="nav-actions">
+                <!-- User Profile Info -->
+                <div style="display: flex; align-items: center; gap: 0.5rem; background: #f1f5f9; padding: 0.4rem 0.8rem; border-radius: 50px;">
+                    <i class="fa-solid fa-circle-user" style="color: var(--primary);"></i>
+                    <span id="navUserEmail" style="font-size: 0.8rem; font-weight: 600;">User</span>
+                </div>
+
+                <!-- Role Switcher -->
+                <div class="role-switcher">
+                    <button class="role-btn active" id="roleCustomerBtn" onclick="switchUserRole('CUSTOMER')">
+                        <i class="fa-solid fa-user"></i> Customer
+                    </button>
+                    <button class="role-btn" id="rolePharmacistBtn" onclick="switchUserRole('PHARMACIST')">
+                        <i class="fa-solid fa-user-doctor"></i> Doctor / Pharma
+                    </button>
+                    <button class="role-btn" id="roleAdminBtn" onclick="switchUserRole('ADMIN')">
+                        <i class="fa-solid fa-shield-halved"></i> Admin
+                    </button>
+                </div>
+
+                <!-- Action Buttons -->
+                <button class="btn btn-outline" onclick="openRxModal()">
+                    <i class="fa-solid fa-file-medical"></i> Upload Rx
+                </button>
+
+                <button class="btn cart-btn" onclick="openCartModal()">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span id="cartCountBadge" class="cart-badge">0</span>
+                </button>
+
+                <!-- Logout Button -->
+                <button class="btn btn-outline" style="border-color: var(--danger); color: var(--danger);" onclick="logoutUser()">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Header Bar for 6 Healthcare Sections -->
+    <nav class="category-nav">
+        <ul class="category-list">
+            <li class="cat-pill active" id="navHomePill" onclick="navigateTo('/', event)"><i class="fa-solid fa-house"></i> Home</li>
+            <li class="cat-pill" id="navMedicinesPill" onclick="navigateTo('/medicines', event)"><i class="fa-solid fa-pills"></i> Medicines</li>
+            <li class="cat-pill" id="navDoctorPill" onclick="navigateTo('/doctor-consult', event)"><i class="fa-solid fa-user-doctor"></i> Doctor Consult</li>
+            <li class="cat-pill" id="navLabPill" onclick="navigateTo('/lab-tests', event)"><i class="fa-solid fa-vial-virus"></i> Lab Tests</li>
+            <li class="cat-pill" id="navProductsPill" onclick="navigateTo('/healthcare-products', event)"><i class="fa-solid fa-heart-pulse"></i> Healthcare Products</li>
+            <li class="cat-pill" id="navCheckPill" onclick="navigateTo('/health-check', event)"><i class="fa-solid fa-file-waveform"></i> Health Check</li>
+            <li class="cat-pill" id="navBlogsPill" onclick="navigateTo('/health-blogs', event)"><i class="fa-solid fa-newspaper"></i> Health Blogs</li>
+        </ul>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="main-wrapper">
+
+        <!-- ================= HOME PAGE VIEW (DEFAULT) ================= -->
+        <section id="viewHome" class="route-view">
+            
+            <!-- HERO BANNER -->
+
+            <!-- 2. HERO BANNER -->
+            <div class="hero-banner">
+                <div class="hero-text">
+                    <h1>Your Health, Our Priority</h1>
+                    <p>Order certified medicines, consult qualified doctors, book lab tests & checkups with express doorstep delivery.</p>
+                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem;">
+                        <button class="btn btn-primary" style="background: white; color: var(--primary); font-weight: 700;" onclick="navigateTo('/medicines', event)">
+                            <i class="fa-solid fa-pills"></i> Shop Medicines
+                        </button>
+                        <button class="btn btn-outline" style="border-color: white; color: white; font-weight: 700;" onclick="navigateTo('/doctor-consult', event)">
+                            <i class="fa-solid fa-user-doctor"></i> Consult Doctor
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-icon" style="font-size: 7rem; opacity: 0.2; position: absolute; right: 2rem;">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+            </div>
+
+            <!-- 3. POPULAR HEALTHCARE CATEGORIES (CLEAN 6 CARDS GRID) -->
+            <div class="section-header" style="margin-top: 2rem;">
+                <h2 class="section-title"><i class="fa-solid fa-cubes-stacked"></i> Healthcare Services</h2>
+            </div>
+
+            <div class="sections-grid">
+                <div class="section-card">
+                    <div>
+                        <div class="section-card-icon icon-lab"><i class="fa-solid fa-vial-virus"></i></div>
+                        <div class="section-card-title">Lab Tests</div>
+                        <div class="section-card-desc">Book diagnostic lab & blood tests with free home sample collection and online reports.</div>
+                    </div>
+                    <button class="btn btn-primary section-card-btn" style="background: #9333ea;" onclick="navigateTo('/lab-tests', event)">
+                        <i class="fa-solid fa-microscope"></i> Book Test
+                    </button>
+                </div>
+
+                <div class="section-card">
+                    <div>
+                        <div class="section-card-icon icon-products"><i class="fa-solid fa-heart-pulse"></i></div>
+                        <div class="section-card-title">Healthcare Products</div>
+                        <div class="section-card-desc">Shop personal care, vitamins, supplements, medical devices, and wellness essentials.</div>
+                    </div>
+                    <button class="btn btn-primary section-card-btn" style="background: #d97706;" onclick="navigateTo('/healthcare-products', event)">
+                        <i class="fa-solid fa-basket-shopping"></i> Shop Products
+                    </button>
+                </div>
+
+                <div class="section-card">
+                    <div>
+                        <div class="section-card-icon icon-checkup"><i class="fa-solid fa-file-waveform"></i></div>
+                        <div class="section-card-title">Health Check</div>
+                        <div class="section-card-desc">Explore full body preventive checkups and specialized diabetic, cardiac & senior packages.</div>
+                    </div>
+                    <button class="btn btn-primary section-card-btn" style="background: #e11d48;" onclick="navigateTo('/health-check', event)">
+                        <i class="fa-solid fa-heart-circle-check"></i> View Health Checks
+                    </button>
+                </div>
+
+                <div class="section-card">
+                    <div>
+                        <div class="section-card-icon icon-blog"><i class="fa-solid fa-newspaper"></i></div>
+                        <div class="section-card-title">Health Blogs</div>
+                        <div class="section-card-desc">Read expert medical articles, fitness advice, nutrition tips, and health guides.</div>
+                    </div>
+                    <button class="btn btn-primary section-card-btn" style="background: #0d9488;" onclick="navigateTo('/health-blogs', event)">
+                        <i class="fa-solid fa-book-open"></i> Read Blogs
+                    </button>
+                </div>
+            </div>
+
+            <!-- 4. FEATURED MEDICINES -->
+            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; flex-wrap: wrap;">
+                <button class="btn btn-secondary" id="tabCatalogBtn" onclick="switchCustomerSubTab('catalog')" style="font-weight: 700;">
+                    <i class="fa-solid fa-store"></i> Medicines Catalog
+                </button>
+                <button class="btn btn-secondary" id="tabOrdersBtn" onclick="switchCustomerSubTab('orders')">
+                    <i class="fa-solid fa-box-archive"></i> My Orders & Status
+                </button>
+                <button class="btn btn-secondary" id="tabRxBtn" onclick="switchCustomerSubTab('prescriptions')">
+                    <i class="fa-solid fa-receipt"></i> My Prescriptions
+                </button>
+            </div>
+
+            <div id="subTabCatalog">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fa-solid fa-pills"></i> Featured Medicines</h2>
+                    <button class="btn btn-outline" style="font-size: 0.85rem;" onclick="navigateTo('/medicines', event)">View All Medicines <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+                <div class="medicine-grid" id="medicineGrid"></div>
+            </div>
+
+            <div id="subTabOrders" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">My Orders History</h2>
+                </div>
+                <div id="customerOrdersList"></div>
+            </div>
+
+            <div id="subTabPrescriptions" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fa-solid fa-receipt"></i> My Prescriptions & Digital Rx</h2>
+                    <button class="btn btn-primary" onclick="openRxModal()">
+                        <i class="fa-solid fa-upload"></i> Upload New Prescription
+                    </button>
+                </div>
+                <div id="customerPrescriptionsList"></div>
+            </div>
+
+            <!-- 5. DOCTOR CONSULTATION (3-4 CARDS ONLY) -->
+            <div class="section-header" style="margin-top: 3rem;">
+                <div>
+                    <h2 class="section-title"><i class="fa-solid fa-user-doctor"></i> Consult a Doctor</h2>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Get professional medical advice from qualified doctors online.</p>
+                </div>
+                <button class="btn btn-outline" onclick="navigateTo('/doctor-consult', event)">
+                    View All Doctors <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;" id="doctorsGridHome"></div>
+
+            <!-- 6. POPULAR LAB TESTS (4-6 CARDS ONLY) -->
+            <div class="section-header" style="margin-top: 3rem;">
+                <h2 class="section-title"><i class="fa-solid fa-vial-virus"></i> Popular Lab Tests</h2>
+                <button class="btn btn-outline" onclick="navigateTo('/lab-tests', event)">
+                    View All Tests <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;" id="labTestsGridHome"></div>
+
+            <!-- 7. POPULAR HEALTHCARE PRODUCTS (4 CARDS ONLY) -->
+            <div class="section-header" style="margin-top: 3rem;">
+                <h2 class="section-title"><i class="fa-solid fa-heart-pulse"></i> Popular Healthcare Products</h2>
+                <button class="btn btn-outline" onclick="navigateTo('/healthcare-products', event)">
+                    View All Products <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;" id="healthcareProductsGridHome"></div>
+
+            <!-- 8. HEALTH CHECK PACKAGES (3-4 CARDS ONLY) -->
+            <div class="section-header" style="margin-top: 3rem;">
+                <h2 class="section-title"><i class="fa-solid fa-file-waveform"></i> Health Check Packages</h2>
+                <button class="btn btn-outline" onclick="navigateTo('/health-check', event)">
+                    View All Packages <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;" id="healthPackagesGridHome"></div>
+
+            <!-- 9. HEALTH & WELLNESS BLOGS (3 CARDS ONLY) -->
+            <div class="section-header" style="margin-top: 3rem;">
+                <h2 class="section-title"><i class="fa-solid fa-newspaper"></i> Health & Wellness</h2>
+                <button class="btn btn-outline" onclick="navigateTo('/health-blogs', event)">
+                    View All Blogs <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;" id="healthBlogsGridHome"></div>
+
+        </section>
+
+
+
+        <!-- ================= 1. DEDICATED MEDICINES PAGE ================= -->
+        <section id="viewMedicines" class="route-view" style="display: none;">
+            <div class="page-header-banner">
+                <div>
+                    <h1><i class="fa-solid fa-pills"></i> Online Medicine Store</h1>
+                    <p>Search & buy certified medicines. Filter by generic name, manufacturer, brand, or prescription requirement.</p>
+                </div>
+                <button class="btn-back-home" onclick="navigateTo('/', event)">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </button>
+            </div>
+
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <div style="position: relative; width: 280px;">
+                        <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                        <input type="text" id="medSearchInput" class="form-control" style="padding-left: 2.5rem;" placeholder="Search Generic, Brand, Manufacturer..." onkeyup="filterMedicineCatalog()">
+                    </div>
+
+                    <select id="medRxFilter" class="form-control" style="width: 170px;" onchange="filterMedicineCatalog()">
+                        <option value="ALL">All Medicines</option>
+                        <option value="RX">Rx Required</option>
+                        <option value="OTC">OTC Only</option>
+                    </select>
+
+                    <select id="medSortSelect" class="form-control" style="width: 180px;" onchange="filterMedicineCatalog()">
+                        <option value="DEFAULT">Sort By: Featured</option>
+                        <option value="PRICE_LOW">Price: Low to High</option>
+                        <option value="PRICE_HIGH">Price: High to Low</option>
+                        <option value="NAME_AZ">Name: A to Z</option>
+                    </select>
+                </div>
+
+                <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted);" id="medCountLabel">
+                    Showing 0 medicines
+                </div>
+            </div>
+
+            <div class="medicine-grid" id="dedicatedMedicineGrid"></div>
+        </section>
+
+
+        <!-- ================= 2. DEDICATED DOCTOR CONSULTATION PAGE ================= -->
+        <section id="viewDoctorConsult" class="route-view" style="display: none;">
+            <div class="page-header-banner" style="background: linear-gradient(135deg, #0284c7 0%, #3b82f6 100%);">
+                <div>
+                    <h1><i class="fa-solid fa-user-doctor"></i> Doctor Consultation</h1>
+                    <p>Consult qualified doctors online, schedule appointments, and receive digital prescriptions.</p>
+                </div>
+                <button class="btn-back-home" onclick="navigateTo('/', event)">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </button>
+            </div>
+
+            <!-- Doctor Specialization Pills -->
+            <div class="filter-bar">
+                <div class="filter-group" id="doctorSpecPills">
+                    <button class="btn btn-secondary active" onclick="filterDoctorsBySpec('', this)">All Doctors</button>
+                    <button class="btn btn-secondary" onclick="filterDoctorsBySpec('General Physician', this)">General Physician</button>
+                    <button class="btn btn-secondary" onclick="filterDoctorsBySpec('Dermatologist', this)">Dermatologist</button>
+                    <button class="btn btn-secondary" onclick="filterDoctorsBySpec('Cardiologist', this)">Cardiologist</button>
+                    <button class="btn btn-secondary" onclick="filterDoctorsBySpec('Pediatrician', this)">Pediatrician</button>
+                    <button class="btn btn-secondary" onclick="filterDoctorsBySpec('Orthopedic', this)">Orthopedic</button>
+                    <button class="btn btn-secondary" onclick="filterDoctorsBySpec('Gynecologist', this)">Gynecologist</button>
+                    <button class="btn btn-secondary" onclick="filterDoctorsBySpec('Dentist', this)">Dentist</button>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;" id="doctorsGrid"></div>
+
+            <div class="section-header" style="margin-top: 3rem;">
+                <h2 class="section-title"><i class="fa-solid fa-calendar-check"></i> My Booked Consultations</h2>
+            </div>
+            <div id="doctorConsultationsList"></div>
+        </section>
+
+
+        <!-- ================= 3. DEDICATED LAB TESTS PAGE ================= -->
+        <section id="viewLabTests" class="route-view" style="display: none;">
+            <div class="page-header-banner" style="background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);">
+                <div>
+                    <h1><i class="fa-solid fa-vial-virus"></i> Diagnostic Lab Tests</h1>
+                    <p>Book lab tests with home sample collection, verified lab reports, and doctor recommendations.</p>
+                </div>
+                <button class="btn-back-home" onclick="navigateTo('/', event)">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;" id="labTestsGrid"></div>
+
+            <div class="section-header" style="margin-top: 3rem;">
+                <h2 class="section-title"><i class="fa-solid fa-notes-medical"></i> My Lab Test Bookings</h2>
+            </div>
+            <div id="labBookingsList"></div>
+        </section>
+
+
+        <!-- ================= 4. DEDICATED HEALTHCARE PRODUCTS PAGE ================= -->
+        <section id="viewHealthcareProducts" class="route-view" style="display: none;">
+            <div class="page-header-banner" style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%);">
+                <div>
+                    <h1><i class="fa-solid fa-heart-pulse"></i> Healthcare & Wellness Store</h1>
+                    <p>Discover personal care, nutrition supplements, first aid, baby care, and medical monitoring devices.</p>
+                </div>
+                <button class="btn-back-home" onclick="navigateTo('/', event)">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </button>
+            </div>
+
+            <div class="medicine-grid" id="healthcareProductsGrid"></div>
+        </section>
+
+
+        <!-- ================= 5. DEDICATED HEALTH CHECK PAGE ================= -->
+        <section id="viewHealthCheck" class="route-view" style="display: none;">
+            <div class="page-header-banner" style="background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);">
+                <div>
+                    <h1><i class="fa-solid fa-file-waveform"></i> Health Checkup Packages</h1>
+                    <p>Preventive full body health packages for diabetic care, cardiac screening, and senior citizen wellness.</p>
+                </div>
+                <button class="btn-back-home" onclick="navigateTo('/', event)">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem;" id="healthPackagesGrid"></div>
+        </section>
+
+
+        <!-- ================= 6. DEDICATED HEALTH BLOGS PAGE ================= -->
+        <section id="viewHealthBlogs" class="route-view" style="display: none;">
+            <div class="page-header-banner" style="background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);">
+                <div>
+                    <h1><i class="fa-solid fa-newspaper"></i> Health & Wellness Blogs</h1>
+                    <p>Read medical insights, doctor recommendations, healthy lifestyle tips, and diet advice.</p>
+                </div>
+                <button class="btn-back-home" onclick="navigateTo('/', event)">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;" id="healthBlogsGrid"></div>
+        </section>
+
+
+        <!-- ================= 7. DEDICATED BRANDED SUBSTITUTE PAGE ================= -->
+        <section id="viewBrandedSubstitute" class="route-view" style="display: none;">
+            <div class="page-header-banner" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);">
+                <div>
+                    <h1><i class="fa-solid fa-right-left"></i> Branded Medicine Substitutes</h1>
+                    <p>Save up to 70% by discovering bioequivalent generic and branded substitutes recommended by top pharmacologists.</p>
+                </div>
+                <button class="btn-back-home" onclick="navigateTo('/', event)">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </button>
+            </div>
+
+            <div style="background: white; border-radius: var(--radius-md); padding: 2rem; border: 1px solid var(--border-color); text-align: center; margin-bottom: 2rem;">
+                <i class="fa-solid fa-pills" style="font-size: 3rem; color: #0284c7; margin-bottom: 1rem;"></i>
+                <h2 style="font-family: 'Outfit', sans-serif; margin-bottom: 0.5rem;">Generic & Bioequivalent Substitute Finder</h2>
+                <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 1.5rem auto;">Search any brand name medicine to compare ingredients, therapeutic efficacy, and cost savings with certified substitute formulations.</p>
+                
+                <div style="max-width: 500px; margin: 0 auto; display: flex; gap: 0.5rem;">
+                    <input type="text" class="form-control" id="substituteSearchInput" placeholder="Enter medicine name e.g. Zofran, Kytril, Decadron..." onkeyup="filterMedicineCatalog()">
+                    <button class="btn btn-primary" style="background: #0284c7;" onclick="navigateTo('/medicines')">Search Medicines</button>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2 class="section-title">Popular Cost-Saving Substitutes</h2>
+            </div>
+            <div class="medicine-grid" id="substituteMedicinesGrid"></div>
+        </section>
+
+
+        <!-- ================= 8. DEDICATED PLUS MEMBERSHIP PAGE ================= -->
+        <section id="viewPlus" class="route-view" style="display: none;">
+            <div class="page-header-banner" style="background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);">
+                <div>
+                    <h1><i class="fa-solid fa-crown"></i> MediPulse PLUS Membership</h1>
+                    <p>Enjoy free doorstep express delivery, extra 5% cashback on all orders, and free doctor consultations.</p>
+                </div>
+                <button class="btn-back-home" onclick="navigateTo('/', event)">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: white; border-radius: var(--radius-md); padding: 1.5rem; border: 2px solid #9333ea; text-align: center;">
+                    <i class="fa-solid fa-truck-fast" style="font-size: 2.5rem; color: #9333ea; margin-bottom: 1rem;"></i>
+                    <h3 style="font-family: 'Outfit', sans-serif; margin-bottom: 0.5rem;">Free Express Delivery</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Zero shipping fees on all medicine & healthcare orders above ₹199.</p>
+                </div>
+                <div style="background: white; border-radius: var(--radius-md); padding: 1.5rem; border: 2px solid #9333ea; text-align: center;">
+                    <i class="fa-solid fa-percent" style="font-size: 2.5rem; color: #9333ea; margin-bottom: 1rem;"></i>
+                    <h3 style="font-family: 'Outfit', sans-serif; margin-bottom: 0.5rem;">Extra 5% Cashback</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Instant wallet credits on every single purchase automatically applied.</p>
+                </div>
+                <div style="background: white; border-radius: var(--radius-md); padding: 1.5rem; border: 2px solid #9333ea; text-align: center;">
+                    <i class="fa-solid fa-user-doctor" style="font-size: 2.5rem; color: #9333ea; margin-bottom: 1rem;"></i>
+                    <h3 style="font-family: 'Outfit', sans-serif; margin-bottom: 0.5rem;">Free Doctor Consult</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Get 1 free online doctor consultation every month for your family.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= 9. DEDICATED OFFERS PAGE ================= -->
+        <section id="viewOffers" class="route-view" style="display: none;">
+            <div class="page-header-banner" style="background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);">
+                <div>
+                    <h1><i class="fa-solid fa-tag"></i> Special Offers & Promo Codes</h1>
+                    <p>Save big with active discount codes, bank cashback offers, and seasonal health sales.</p>
+                </div>
+                <button class="btn-back-home" onclick="navigateTo('/', event)">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: white; border-radius: var(--radius-md); padding: 1.5rem; border: 1px solid var(--border-color); border-left: 5px solid #e11d48;">
+                    <span style="background: #ffe4e6; color: #e11d48; font-size: 0.75rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 50px;">PROMO CODE: MED27</span>
+                    <h3 style="font-family: 'Outfit', sans-serif; margin: 0.5rem 0;">Flat 27% OFF Prescription Medicines</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Valid on all orders above ₹499. Apply code during checkout.</p>
+                </div>
+
+                <div style="background: white; border-radius: var(--radius-md); padding: 1.5rem; border: 1px solid var(--border-color); border-left: 5px solid #0284c7;">
+                    <span style="background: #e0f2fe; color: #0284c7; font-size: 0.75rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 50px;">PROMO CODE: LAB70</span>
+                    <h3 style="font-family: 'Outfit', sans-serif; margin: 0.5rem 0;">Up to 70% OFF Diagnostic Lab Tests</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Free home sample collection included on all body checkups.</p>
+                </div>
+
+                <div style="background: white; border-radius: var(--radius-md); padding: 1.5rem; border: 1px solid var(--border-color); border-left: 5px solid #16a34a;">
+                    <span style="background: #dcfce7; color: #16a34a; font-size: 0.75rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 50px;">BANK OFFER</span>
+                    <h3 style="font-family: 'Outfit', sans-serif; margin: 0.5rem 0;">Instant ₹150 Cashback via UPI Pay</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Applicable on minimum order value of ₹799 paid using UPI.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= 10. DEDICATED VALUE STORE PAGE ================= -->
+        <section id="viewValueStore" class="route-view" style="display: none;">
+            <div class="page-header-banner" style="background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);">
+                <div>
+                    <h1><i class="fa-solid fa-hand-holding-dollar"></i> Value Store — Deals Under ₹99</h1>
+                    <p>Everyday healthcare essentials, first aid supplies, and daily hygiene products starting from just ₹49.</p>
+                </div>
+                <button class="btn-back-home" onclick="navigateTo('/', event)">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </button>
+            </div>
+
+            <div class="medicine-grid" id="valueStoreGrid"></div>
+        </section>
+
+
+        <!-- ================= PHARMACIST / DOCTOR WORKSPACE ================= -->
+
+        <section id="pharmacistView" class="view-section" style="display: none;">
+            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1rem 1.5rem; border-radius: var(--radius-sm); margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                <div>
+                    <h3 style="color: #1e40af; font-family: 'Outfit', sans-serif;"><i class="fa-solid fa-stethoscope"></i> Pharmacist & Doctor Workspace</h3>
+                    <p style="color: #1e3a8a; font-size: 0.9rem;">Review uploaded patient prescriptions, write digital Rx, and process order dispatches.</p>
+                </div>
+                <button class="btn btn-primary" onclick="openDoctorCreateRxModal()">
+                    <i class="fa-solid fa-file-signature"></i> Write Digital Prescription
+                </button>
+            </div>
+
+            <div class="section-header">
+                <h2 class="section-title">Pending Prescription Verifications</h2>
+            </div>
+            <div class="table-responsive" style="margin-bottom: 2.5rem;">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Rx ID</th>
+                            <th>Customer Name</th>
+                            <th>Doctor Notes</th>
+                            <th>Uploaded Date</th>
+                            <th>Status</th>
+                            <th>Document Image</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pharmacistRxTableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="section-header">
+                <h2 class="section-title">Order Processing Workspace</h2>
+            </div>
+            <div class="table-responsive">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Total Amount</th>
+                            <th>Rx Status</th>
+                            <th>Current Order Status</th>
+                            <th>Update Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pharmacistOrderTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+
+        <!-- ================= ADMIN VIEW ================= -->
+        <section id="adminView" class="view-section" style="display: none;">
+            <div style="background: #f0fdf4; border-left: 4px solid var(--primary); padding: 1rem 1.5rem; border-radius: var(--radius-sm); margin-bottom: 2rem;">
+                <h3 style="color: #166534; font-family: 'Outfit', sans-serif;"><i class="fa-solid fa-chart-line"></i> Admin Dashboard & Management</h3>
+                <p style="color: #14532d; font-size: 0.9rem;">Manage inventory stock, categories, user accounts, and system analytics.</p>
+            </div>
+
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-icon"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                    <div>
+                        <div class="kpi-num" id="kpiTotalSales">₹0.00</div>
+                        <div class="kpi-label">Total Platform Revenue</div>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #e0f2fe; color: #0284c7;"><i class="fa-solid fa-cart-flatbed"></i></div>
+                    <div>
+                        <div class="kpi-num" id="kpiTotalOrders">0</div>
+                        <div class="kpi-label">Total Orders Placed</div>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #fef3c7; color: #b45309;"><i class="fa-solid fa-pills"></i></div>
+                    <div>
+                        <div class="kpi-num" id="kpiTotalMedicines">0</div>
+                        <div class="kpi-label">Active Medicines</div>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #f3e8ff; color: #7e22ce;"><i class="fa-solid fa-users"></i></div>
+                    <div>
+                        <div class="kpi-num" id="kpiTotalUsers">0</div>
+                        <div class="kpi-label">Registered Accounts</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2 class="section-title">Medicine Catalog Inventory</h2>
+                <button class="btn btn-primary" onclick="openAddMedicineModal()">
+                    <i class="fa-solid fa-plus"></i> Add New Medicine
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Medicine Name</th>
+                            <th>Category</th>
+                            <th>Brand</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Rx Required</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminMedicineTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- ================= MODALS ================= -->
+
+    <!-- Doctor Consultation Booking Modal -->
+    <div class="modal-overlay" id="doctorBookingModal">
+        <div class="modal-content" style="max-width: 550px;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="docBookingModalTitle"><i class="fa-solid fa-calendar-plus"></i> Book Doctor Consultation</h3>
+                <button class="close-btn" onclick="closeDoctorBookingModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="docBookingForm" onsubmit="submitDoctorBooking(event)">
+                    <input type="hidden" id="bookingDoctorId">
+                    <div class="form-group">
+                        <label class="form-label">Patient Full Name</label>
+                        <input type="text" id="bookingPatientName" class="form-control" required placeholder="Alex Johnson">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Select Date</label>
+                            <input type="date" id="bookingDate" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Select Time Slot</label>
+                            <select id="bookingTimeSlot" class="form-control" required></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Health Issue / Symptoms Notes</label>
+                        <textarea id="bookingNotes" class="form-control" rows="3" placeholder="Describe symptoms or reasons for consultation..."></textarea>
+                    </div>
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; display: flex; justify-content: space-between; font-weight: 700;">
+                        <span>Consultation Fee:</span>
+                        <span id="bookingFeeLabel">₹500.00</span>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fa-solid fa-check-circle"></i> Confirm Appointment & Pay
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Doctor Prescription Creator Modal (Doctor Role) -->
+    <div class="modal-overlay" id="doctorCreateRxModal">
+        <div class="modal-content" style="max-width: 750px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-file-signature"></i> Create Digital Doctor Prescription</h3>
+                <button class="close-btn" onclick="closeDoctorCreateRxModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="rxCreateForm" onsubmit="submitDoctorCreatedRx(event)">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Doctor Name</label>
+                            <input type="text" id="rxDocName" class="form-control" required value="Dr. Sarah Jenkins">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Specialization</label>
+                            <input type="text" id="rxDocSpec" class="form-control" required value="General Physician">
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Patient Name</label>
+                            <input type="text" id="rxPatientName" class="form-control" required placeholder="Alex Johnson">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Consultation Date</label>
+                            <input type="text" id="rxConsultDate" class="form-control" required value="Today">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Diagnosis & Doctor Notes</label>
+                        <textarea id="rxDiagnosisNotes" class="form-control" rows="2" placeholder="Clinical diagnosis & health instructions..."></textarea>
+                    </div>
+
+                    <h4 style="font-family: 'Outfit', sans-serif; margin: 1rem 0 0.5rem 0; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Prescribed Medicines</span>
+                        <button type="button" class="btn btn-secondary" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;" onclick="addRxItemRow()">
+                            <i class="fa-solid fa-plus"></i> Add Medicine
+                        </button>
+                    </h4>
+
+                    <div id="rxMedicinesContainer" style="margin-bottom: 1.5rem;"></div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fa-solid fa-paper-plane"></i> Save & Send Prescription to Patient
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prescription View / Printable Rx Modal -->
+    <div class="modal-overlay" id="viewRxDetailModal">
+        <div class="modal-content" style="max-width: 650px;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="rxModalDetailTitle"><i class="fa-solid fa-file-prescription"></i> Digital Prescription Details</h3>
+                <button class="close-btn" onclick="closeRxDetailModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="rxModalDetailBody"></div>
+        </div>
+    </div>
+
+    <!-- Lab Test Booking Modal -->
+    <div class="modal-overlay" id="labBookingModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-vial"></i> Book Lab Diagnostic Test</h3>
+                <button class="close-btn" onclick="closeLabBookingModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="labBookingForm" onsubmit="submitLabBooking(event)">
+                    <input type="hidden" id="labTestName">
+                    <input type="hidden" id="labTestPrice">
+                    <div class="form-group">
+                        <label class="form-label">Test Name</label>
+                        <input type="text" id="labTestDisplay" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Patient Name</label>
+                        <input type="text" id="labPatientName" class="form-control" required placeholder="Alex Johnson">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Sample Collection Date</label>
+                            <input type="date" id="labDate" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Time Slot</label>
+                            <select id="labTime" class="form-control" required>
+                                <option value="07:00 AM - 09:00 AM">07:00 AM - 09:00 AM</option>
+                                <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
+                                <option value="11:00 AM - 01:00 PM">11:00 AM - 01:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; display: flex; justify-content: space-between; font-weight: 700;">
+                        <span>Test Fee:</span>
+                        <span id="labPriceDisplay">₹0.00</span>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fa-solid fa-calendar-check"></i> Confirm Lab Booking
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Health Check Package Booking Modal -->
+    <div class="modal-overlay" id="packageBookingModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-heart-circle-check"></i> Book Health Package</h3>
+                <button class="close-btn" onclick="closePackageBookingModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="pkgBookingForm" onsubmit="submitPackageBooking(event)">
+                    <input type="hidden" id="pkgName">
+                    <input type="hidden" id="pkgPrice">
+                    <div class="form-group">
+                        <label class="form-label">Package Name</label>
+                        <input type="text" id="pkgDisplay" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Patient Name</label>
+                        <input type="text" id="pkgPatientName" class="form-control" required placeholder="Alex Johnson">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Checkup Date</label>
+                            <input type="date" id="pkgDate" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Time Slot</label>
+                            <select id="pkgTime" class="form-control" required>
+                                <option value="08:00 AM - 10:00 AM">08:00 AM - 10:00 AM</option>
+                                <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; display: flex; justify-content: space-between; font-weight: 700;">
+                        <span>Package Amount:</span>
+                        <span id="pkgPriceDisplay">₹0.00</span>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fa-solid fa-check"></i> Confirm Package Booking
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Health Blog Reader Modal -->
+    <div class="modal-overlay" id="blogModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="blogModalTitle"><i class="fa-solid fa-book-open"></i> Health Blog Article</h3>
+                <button class="close-btn" onclick="closeBlogModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="blogModalBody"></div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div class="modal-overlay" id="productDetailModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="detailModalTitle"><i class="fa-solid fa-pills"></i> Product Details</h3>
+                <button class="close-btn" onclick="closeProductDetailModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="productDetailModalBody"></div>
+        </div>
+    </div>
+
+    <!-- Cart & Checkout Modal -->
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-cart-shopping"></i> Shopping Cart & Checkout</h3>
+                <button class="close-btn" onclick="closeCartModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="cartItemsContainer"></div>
+
+                <div id="checkoutFormSection" style="margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                    <h4 style="font-family: 'Outfit', sans-serif; margin-bottom: 1rem;">Shipping & Payment Details</h4>
+                    
+                    <div class="form-group">
+                        <label class="form-label"><i class="fa-solid fa-location-dot"></i> Delivery Address</label>
+                        <select id="checkoutAddressSelect" class="form-control"></select>
+                    </div>
+
+                    <div class="form-group" id="rxSelectGroup" style="display: none;">
+                        <label class="form-label" style="color: var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> Prescription Required for Rx Items</label>
+                        <select id="checkoutRxSelect" class="form-control"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label"><i class="fa-solid fa-credit-card"></i> Payment Method</label>
+                        <select id="checkoutPaymentMethod" class="form-control">
+                            <option value="CARD">Credit / Debit Card</option>
+                            <option value="UPI">UPI / Instant Pay</option>
+                            <option value="NET_BANKING">Net Banking</option>
+                            <option value="COD">Cash on Delivery</option>
+                        </select>
+                    </div>
+
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; display: flex; justify-content: space-between; font-weight: 700; font-size: 1.1rem;">
+                        <span>Grand Total Amount:</span>
+                        <span id="cartGrandTotal">₹0.00</span>
+                    </div>
+
+                    <button class="btn btn-primary" style="width: 100%; padding: 0.85rem;" onclick="processCheckout()">
+                        <i class="fa-solid fa-lock"></i> Complete Order & Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Prescription Modal -->
+    <div class="modal-overlay" id="rxModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-file-arrow-up"></i> Upload Medical Prescription</h3>
+                <button class="close-btn" onclick="closeRxModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="rxUploadForm" onsubmit="handleRxUpload(event)">
+                    <div class="form-group">
+                        <label class="form-label">Select Prescription File (JPG, PNG, PDF)</label>
+                        <input type="file" id="rxFileInput" class="form-control" accept="image/*,.pdf" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Doctor Notes / Instructions (Optional)</label>
+                        <textarea id="rxNotesInput" class="form-control" rows="3" placeholder="e.g. Prescribed by Dr. Smith for 7 days course..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Upload Prescription
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Medicine Modal (Admin) -->
+    <div class="modal-overlay" id="medicineModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="medicineModalTitle"><i class="fa-solid fa-capsules"></i> Add New Medicine</h3>
+                <button class="close-btn" onclick="closeMedicineModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="medicineForm" onsubmit="saveMedicine(event)">
+                    <input type="hidden" id="medEditId">
+                    <div class="form-group">
+                        <label class="form-label">Medicine Name</label>
+                        <input type="text" id="medName" class="form-control" required placeholder="e.g. Zofran 4mg">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Generic Name</label>
+                            <input type="text" id="medGeneric" class="form-control" placeholder="e.g. Ondansetron">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Brand Name</label>
+                            <input type="text" id="medBrand" class="form-control" placeholder="e.g. Zofran">
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Manufacturer</label>
+                            <input type="text" id="medManufacturer" class="form-control" placeholder="e.g. GlaxoSmithKline">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Location</label>
+                            <input type="text" id="medLocation" class="form-control" placeholder="e.g. Research Triangle Park, NC">
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Price (₹)</label>
+                            <input type="number" step="0.01" id="medPrice" class="form-control" required placeholder="199.00">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Discount (%)</label>
+                            <input type="number" step="0.01" id="medDiscount" class="form-control" value="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Stock Quantity</label>
+                            <input type="number" id="medStock" class="form-control" required placeholder="100">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select id="medCategory" class="form-control" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Image URL / Asset Path</label>
+                        <input type="text" id="medImage" class="form-control" placeholder="/images/ondansetron.svg">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea id="medDescription" class="form-control" rows="2" placeholder="Brief dosage & usage information..."></textarea>
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+                        <input type="checkbox" id="medRequiresRx" style="width: 18px; height: 18px;">
+                        <label for="medRequiresRx" class="form-label" style="margin-bottom: 0; cursor: pointer;">Requires Doctor Prescription (Rx)</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                        <i class="fa-solid fa-floppy-disk"></i> Save Medicine Record
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Preview Modal -->
+    <div class="modal-overlay" id="imagePreviewModal">
+        <div class="modal-content" style="max-width: 600px; text-align: center;">
+            <div class="modal-header">
+                <h3 class="modal-title">Prescription Document Preview</h3>
+                <button class="close-btn" onclick="closeImagePreviewModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="previewImg" src="" style="max-width: 100%; max-height: 70vh; border-radius: var(--radius-md);" alt="Prescription Document">
+            </div>
+        </div>
+    </div>
+
+    <!-- Platform Footer -->
+    <footer class="platform-footer">
+        <div class="footer-container">
+            <div>
+                <div class="brand" style="color: white; margin-bottom: 1rem;">
+                    <div class="brand-icon"><i class="fa-solid fa-prescription-bottle-medical"></i></div>
+                    <span>Medi<span style="color: #10b981;">Pulse</span></span>
+                </div>
+                <p style="font-size: 0.88rem; line-height: 1.6; max-width: 300px; margin-bottom: 1rem;">
+                    India's trusted online pharmacy and healthcare platform. Certified medicines, verified doctors, diagnostic lab tests, and express doorstep delivery.
+                </p>
+                <div style="display: flex; gap: 1rem; font-size: 1.2rem; color: #94a3b8;">
+                    <i class="fa-brands fa-facebook"></i>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-linkedin"></i>
+                </div>
+            </div>
+
+            <div>
+                <div class="footer-title">Healthcare Services</div>
+                <ul class="footer-links">
+                    <li><a href="/medicines" onclick="navigateTo('/medicines', event)"><i class="fa-solid fa-pills"></i> Online Medicine Store</a></li>
+                    <li><a href="/doctor-consult" onclick="navigateTo('/doctor-consult', event)"><i class="fa-solid fa-user-doctor"></i> Doctor Consultation</a></li>
+                    <li><a href="/lab-tests" onclick="navigateTo('/lab-tests', event)"><i class="fa-solid fa-vial-virus"></i> Diagnostic Lab Tests</a></li>
+                    <li><a href="/healthcare-products" onclick="navigateTo('/healthcare-products', event)"><i class="fa-solid fa-heart-pulse"></i> Healthcare Products</a></li>
+                    <li><a href="/health-check" onclick="navigateTo('/health-check', event)"><i class="fa-solid fa-file-waveform"></i> Health Checkup Packages</a></li>
+                    <li><a href="/health-blogs" onclick="navigateTo('/health-blogs', event)"><i class="fa-solid fa-newspaper"></i> Health & Wellness Blogs</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="footer-title">Popular Categories</div>
+                <ul class="footer-links">
+                    <li><a href="/healthcare-products?category=musthaves" onclick="navigateTo('/healthcare-products', event)">Health Must Haves</a></li>
+                    <li><a href="/healthcare-products?category=personalcare" onclick="navigateTo('/healthcare-products', event)">Personal Care</a></li>
+                    <li><a href="/healthcare-products?category=vitamins" onclick="navigateTo('/healthcare-products', event)">Vitamins & Supplements</a></li>
+                    <li><a href="/healthcare-products?category=devices" onclick="navigateTo('/healthcare-products', event)">Healthcare Devices</a></li>
+                    <li><a href="/healthcare-products?category=diabetes" onclick="navigateTo('/healthcare-products', event)">Diabetes Care</a></li>
+                    <li><a href="/healthcare-products?category=ayurvedic" onclick="navigateTo('/healthcare-products', event)">Ayurvedic Products</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="footer-title">Customer Support</div>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fa-solid fa-headset"></i> 24/7 Helpline: 1800-123-4567</a></li>
+                    <li><a href="#"><i class="fa-solid fa-envelope"></i> support@medipulse.in</a></li>
+                    <li><a href="#"><i class="fa-solid fa-shield-halved"></i> 100% Genuine Medicines</a></li>
+                    <li><a href="#"><i class="fa-solid fa-truck-ramp-box"></i> Express Doorstep Delivery</a></li>
+                    <li><a href="#"><i class="fa-solid fa-lock"></i> SSL Secure Payments</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>&copy; 2026 MediPulse Healthcare Platform. All rights reserved. Indian Rupees (₹) pricing model.</div>
+            <div style="display: flex; gap: 1rem;">
+                <span>Privacy Policy</span>
+                <span>Terms of Service</span>
+                <span>Return Policy</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- JS Module -->
+    <script src="/js/app.js"></script>
+</body>
+</html>

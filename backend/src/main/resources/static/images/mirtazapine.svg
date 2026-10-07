@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <rect width="400" height="300" fill="#ecfeff" rx="16"/>
+  <rect x="92" y="42" width="216" height="216" rx="16" fill="#000000" opacity="0.06"/>
+  <rect x="90" y="40" width="220" height="220" rx="16" fill="#ffffff" stroke="#06b6d4" stroke-width="3"/>
+  <path d="M 90,56 Q 90,40 106,40 L 294,40 Q 310,40 310,56 L 310,95 L 90,95 Z" fill="#0891b2"/>
+  <text x="200" y="70" font-family="'Inter', system-ui, sans-serif" font-size="16" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="1">REMERON 15mg</text>
+  <text x="200" y="87" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="600" fill="#a5f3fc" text-anchor="middle">Mirtazapine SolTab Dispersible</text>
+
+  <rect x="105" y="105" width="36" height="20" rx="4" fill="#cffafe"/>
+  <text x="123" y="119" font-family="sans-serif" font-size="11" font-weight="800" fill="#155e75" text-anchor="middle">Rx</text>
+
+  <!-- Moon Sleep Icon & Tablet Blister Illustration -->
+  <path d="M 190,120 A 15,15 0 0,0 215,145 A 18,18 0 1,1 190,120 Z" fill="#06b6d4"/>
+  <g fill="#67e8f9" stroke="#0891b2" stroke-width="1.5">
+    <rect x="135" y="160" width="40" height="24" rx="12"/>
+    <rect x="180" y="160" width="40" height="24" rx="12"/>
+    <rect x="225" y="160" width="40" height="24" rx="12"/>
+  </g>
+  <text x="200" y="208" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="600" fill="#155e75" text-anchor="middle">15mg Oval Scored SolTabs</text>
+
+  <line x1="110" y1="230" x2="290" y2="230" stroke="#cffafe" stroke-width="1"/>
+  <text x="200" y="248" font-family="'Inter', system-ui, sans-serif" font-size="12" font-weight="700" fill="#155e75" text-anchor="middle">Organon Inc.</text>
+</svg>

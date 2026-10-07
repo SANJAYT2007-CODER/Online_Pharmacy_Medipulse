@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eff6ff"/>
+      <stop offset="100%" stop-color="#dbeafe"/>
+    </linearGradient>
+    <linearGradient id="blueCapsule" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="whiteCapsule" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#bg)" rx="16"/>
+  <!-- Blister pack container -->
+  <rect x="100" y="60" width="200" height="180" rx="16" fill="#ffffff" stroke="#93c5fd" stroke-width="3" opacity="0.9"/>
+  <!-- Blister Grid Pills -->
+  <g fill="url(#blueCapsule)">
+    <rect x="125" y="85" width="40" height="24" rx="12"/>
+    <rect x="180" y="85" width="40" height="24" rx="12"/>
+    <rect x="235" y="85" width="40" height="24" rx="12"/>
+    <rect x="125" y="135" width="40" height="24" rx="12"/>
+    <rect x="180" y="135" width="40" height="24" rx="12"/>
+    <rect x="235" y="135" width="40" height="24" rx="12"/>
+    <rect x="125" y="185" width="40" height="24" rx="12"/>
+    <rect x="180" y="185" width="40" height="24" rx="12"/>
+    <rect x="235" y="185" width="40" height="24" rx="12"/>
+  </g>
+  <text x="200" y="268" font-family="sans-serif" font-size="14" font-weight="700" fill="#1e40af" text-anchor="middle">Paracetamol Extra 650mg</text>
+</svg>

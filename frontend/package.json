@@ -1,0 +1,19 @@
+{
+  "name": "medipulse-frontend",
+  "version": "1.0.0",
+  "description": "MediPulse Online Pharmacy - Frontend Application",
+  "main": "static/js/app.js",
+  "scripts": {
+    "start": "npx serve -s static -p 3000",
+    "dev": "npx serve static -p 3000"
+  },
+  "keywords": [
+    "pharmacy",
+    "healthcare",
+    "frontend",
+    "vanilla-js",
+    "thymeleaf"
+  ],
+  "author": "MediPulse Team",
+  "license": "ISC"
+}
