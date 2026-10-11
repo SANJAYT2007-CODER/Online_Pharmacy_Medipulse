@@ -1,5 +1,5 @@
 /* MediPulse Online Healthcare & Pharmacy Platform Logic */
-
+const API_URL = "https://online-pharmacy-medipulse-1.onrender.com";
 let state = {
     currentRole: 'CUSTOMER',
     currentUser: null,
@@ -143,7 +143,7 @@ function handleRouting(path) {
 // Fetch config and setup Supabase subscriptions
 async function initSupabaseRealtime() {
     try {
-        const res = await fetch('/api/config/supabase');
+        const res = await fetch(`${API_URL}'/api/config/supabase');
         const config = await res.json();
         if (config.url && config.anonKey && 
             !config.url.includes("your-project") && 
@@ -167,7 +167,7 @@ async function initSupabaseRealtime() {
 // Load Current User
 async function loadCurrentUser() {
     try {
-        const res = await fetch('/api/auth/current');
+       const res = await fetch(`${API_URL}/api/auth/logout`, { method: 'POST' });
         if (res.status === 401) {
             window.location.href = '/login';
             return;
@@ -201,7 +201,7 @@ async function loadCurrentUser() {
 // Logout User
 async function logoutUser() {
     try {
-        const res = await fetch('/api/auth/logout', { method: 'POST' });
+       const res = await fetch(`${API_URL}/api/auth/logout`, { method: 'POST' });
         if (res.ok) window.location.href = '/login';
     } catch (err) {
         console.error('Logout failed:', err);
@@ -220,8 +220,8 @@ async function switchUserRole(role) {
     document.querySelectorAll('.route-view').forEach(view => view.style.display = 'none');
 
     try {
-        await fetch(`/api/auth/switch-role/${role}`, { method: 'POST' });
-        const res = await fetch('/api/auth/current');
+       await fetch(`${API_URL}/api/auth/switch-role/${role}`, { method: 'POST' });
+        const res = await fetch(`${API_URL}/api/auth/current`);
         state.currentUser = await res.json();
         document.getElementById('navUserEmail').innerText = state.currentUser.fullName || state.currentUser.email;
     } catch (err) {
@@ -266,7 +266,7 @@ function switchCustomerSubTab(tab) {
 // Categories & Medicines Loading
 async function loadCategories() {
     try {
-        const res = await fetch('/api/medicines/categories');
+        const res = await fetch(`${API_URL}/api/medicines/categories);
         state.categories = await res.json();
     } catch (err) {
         console.error('Error loading categories:', err);
@@ -275,7 +275,7 @@ async function loadCategories() {
 
 async function loadMedicines() {
     try {
-        const res = await fetch('/api/medicines');
+       const res = await fetch(${API_URL}/api/medicines);
         state.medicines = await res.json();
         renderMedicineCards();
         renderHealthcareProductsGrid();
@@ -393,7 +393,7 @@ function filterMedicineCatalog() {
 // 2. DOCTOR CONSULTATION SYSTEM
 async function loadDoctors() {
     try {
-        const res = await fetch('/api/doctors');
+        const res = await fetch(`${API_URL}'/api/doctors');
         state.doctors = await res.json();
         renderDoctorsGrid();
         renderDoctorsGridHome();
@@ -511,7 +511,7 @@ async function submitDoctorBooking(e) {
     const notes = document.getElementById('bookingNotes').value;
 
     try {
-        const res = await fetch('/api/doctors/consultations', {
+        const res = await fetch(`${API_URL}/api/doctors/consultations', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ doctorId, patientName, appointmentDate, appointmentTime, notes })
@@ -662,7 +662,7 @@ async function submitLabBooking(e) {
     const bookingTime = document.getElementById('labTime').value;
 
     try {
-        const res = await fetch('/api/labs/bookings', {
+        const res = await fetch(`${API_URL}'/api/labs/bookings', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ testName, price, patientName, bookingDate, bookingTime })
@@ -679,7 +679,7 @@ async function submitLabBooking(e) {
 
 async function loadMyLabBookings() {
     try {
-        const res = await fetch('/api/labs/bookings/my');
+        const res = await fetch(`${API_URL}'/api/labs/bookings/my');
         const list = await res.json();
         const container = document.getElementById('labBookingsList');
         if (!container) return;
@@ -908,7 +908,7 @@ async function submitPackageBooking(e) {
     const bookingTime = document.getElementById('pkgTime').value;
 
     try {
-        const res = await fetch('/api/health-checks/bookings', {
+        const res = await fetch(`${API_URL}'/api/health-checks/bookings', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ packageName, price, patientName, bookingDate, bookingTime })
@@ -925,7 +925,7 @@ async function submitPackageBooking(e) {
 // 6. HEALTH BLOGS SYSTEM
 async function loadHealthBlogs() {
     try {
-        const res = await fetch('/api/blogs');
+        const res = await fetch(`${API_URL}'/api/blogs');
         state.healthBlogs = await res.json();
         renderHealthBlogsGrid();
         renderHealthBlogsGridHome();
@@ -1011,7 +1011,7 @@ function closeBlogModal() {
 // TASK 2: DOCTOR PRESCRIPTION → MEDICINE PURCHASE WORKFLOW
 async function loadDoctorPrescriptions() {
     try {
-        const res = await fetch('/api/doctor-prescriptions/my');
+        const res = await fetch(`${API_URL}'/api/doctor-prescriptions/my');
         state.doctorPrescriptions = await res.json();
     } catch (err) {
         console.error('Error loading doctor rxs:', err);
@@ -1173,7 +1173,7 @@ async function buyMedicinesFromRx(rxId) {
         const matchedMed = state.medicines.find(m => m.medicineName.toLowerCase().includes(item.medicineName.toLowerCase()) || item.medicineName.toLowerCase().includes(m.medicineName.toLowerCase()));
         const medId = matchedMed ? matchedMed.medicineId : (item.medicineId || state.medicines[0].medicineId);
         
-        await fetch('/api/cart/items', {
+        await fetch(`${API_URL}'/api/cart/items', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ medicineId: medId, quantity: 1 })
@@ -1246,7 +1246,7 @@ async function submitDoctorCreatedRx(e) {
     });
 
     try {
-        const res = await fetch('/api/doctor-prescriptions', {
+        const res = await fetch(`${API_URL}'/api/doctor-prescriptions', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ doctorName, doctorSpecialization, patientName, consultationDate, diagnosisNotes, medicines })
@@ -1264,7 +1264,7 @@ async function submitDoctorCreatedRx(e) {
 // Cart Handling & Checkout
 async function loadCart() {
     try {
-        const res = await fetch('/api/cart');
+        const res = await fetch(`${APIURL}'/api/cart');
         state.cart = await res.json();
         updateCartBadge();
     } catch (err) {
@@ -1284,7 +1284,7 @@ function updateCartBadge() {
 
 async function addToCart(medicineId) {
     try {
-        const res = await fetch('/api/cart/items', {
+        const res = await fetch(`${API_URL}'/api/cart/items', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ medicineId: medicineId, quantity: 1 })
@@ -1405,7 +1405,7 @@ function renderCartModalContent() {
 
 async function loadAddresses() {
     try {
-        const res = await fetch('/api/orders/addresses');
+        const res = await fetch(`${API-URL}'/api/orders/addresses');
         state.addresses = await res.json();
         renderAddressDropdown();
     } catch (err) {
@@ -1427,7 +1427,7 @@ function renderAddressDropdown() {
 
 async function loadPrescriptions() {
     try {
-        const res = await fetch('/api/prescriptions/my');
+        const res = await fetch(`${API_URL}'/api/prescriptions/my');
         state.prescriptions = await res.json();
         renderRxDropdown();
     } catch (err) {
@@ -1453,7 +1453,7 @@ async function processCheckout() {
     const paymentMethod = document.getElementById('checkoutPaymentMethod').value;
 
     try {
-        const res = await fetch('/api/orders/checkout', {
+        const res = await fetch(`${API_URL}'/api/orders/checkout', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -1482,7 +1482,7 @@ async function processCheckout() {
 // Load Customer Orders
 async function loadCustomerOrders() {
     try {
-        const res = await fetch('/api/orders/my');
+        const res = await fetch(`${API_URL}'/api/orders/my');
         const orders = await res.json();
         const container = document.getElementById('customerOrdersList');
         if (!container) return;
@@ -1540,7 +1540,7 @@ async function handleRxUpload(e) {
     formData.append('notes', notesInput.value);
 
     try {
-        const res = await fetch('/api/prescriptions/upload', {
+        const res = await fetch(`${API_URL}'/api/prescriptions/upload', {
             method: 'POST',
             body: formData
         });
@@ -1604,7 +1604,7 @@ async function loadPendingPrescriptions() {
 
 async function updateRxStatus(rxId, status) {
     try {
-        const res = await fetch(`/api/prescriptions/${rxId}/status`, {
+        const res = await fetch(`${API_URL}/api/prescriptions/${rxId}/status`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ status })
@@ -1617,7 +1617,7 @@ async function updateRxStatus(rxId, status) {
 
 async function loadPharmacistOrders() {
     try {
-        const res = await fetch('/api/orders/all');
+        const res = await fetch(`${API_URL}'/api/orders/all');
         const orders = await res.json();
         const tbody = document.getElementById('pharmacistOrderTableBody');
         if (!tbody) return;
@@ -1648,7 +1648,7 @@ async function loadPharmacistOrders() {
 
 async function updateOrderStatus(orderId, status) {
     try {
-        await fetch(`/api/orders/${orderId}/status`, {
+        await fetch(`${API_URL}/api/orders/${orderId}/status`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ status })
@@ -1786,7 +1786,7 @@ async function saveMedicine(e) {
 async function deleteMedicine(id) {
     if (!confirm('Are you sure you want to inactivate this medicine?')) return;
     try {
-        const res = await fetch(`/api/medicines/${id}`, { method: 'DELETE' });
+        const res = await fetch(`${API_URL}/api/medicines/${id}`, { method: 'DELETE' });
         if (res.ok) {
             loadMedicines();
             loadAdminData();
